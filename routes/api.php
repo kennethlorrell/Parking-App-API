@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Auth\LogoutController;
+use App\Http\Controllers\Api\V1\Auth\PasswordUpdateController;
+use App\Http\Controllers\Api\V1\Auth\ProfileController;
+use App\Http\Controllers\Api\V1\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +20,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', fn (Request $request) => $request->user());
+
+    Route::get('profile', [ProfileController::class, 'show']);
+    Route::put('profile', [ProfileController::class, 'update']);
+
+    Route::put('password', PasswordUpdateController::class);
+
+    Route::post('logout', LogoutController::class);
+
+    Route::apiResource('vehicles', VehicleController::class);
 });
+
+Route::post('register', RegisterController::class);
+Route::post('login', LoginController::class);
