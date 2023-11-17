@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\UserRecord;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Parking extends Model
 {
-    use HasFactory;
+    use HasFactory, UserRecord;
 
     protected $fillable = [
         'user_id',
@@ -22,4 +25,24 @@ class Parking extends Model
         'start_time' => 'datetime',
         'stop_time' => 'datetime',
     ];
+
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class);
+    }
+
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    public function scopeActive($query): Builder
+    {
+        return $query->whereNull('stop_time');
+    }
+
+    public function scopeStopped($query): Builder
+    {
+        return $query->whereNotNull('stop_time');
+    }
 }

@@ -17,7 +17,7 @@ class VehicleFactory extends Factory
      */
     public function definition(): array
     {
-        $plateNumber = strtoupper(fake()->text(2)) . '-' . fake()->randomNumber(5);
+        $plateNumber = 'AA-' . fake()->randomNumber(5);
 
         return [
             'user_id' => User::inRandomOrder()->first(),

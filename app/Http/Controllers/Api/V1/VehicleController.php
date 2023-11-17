@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Vehicle\StoreRequest;
-use App\Http\Requests\Vehicle\UpdateRequest;
+use App\Http\Requests\Vehicle\StoreVehicleRequest;
+use App\Http\Requests\Vehicle\UpdateVehicleRequest;
 use App\Http\Resources\VehicleResource;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +19,7 @@ class VehicleController extends Controller
         return VehicleResource::collection(Vehicle::all());
     }
 
-    public function store(StoreRequest $request): JsonResource
+    public function store(StoreVehicleRequest $request): JsonResource
     {
         $vehicle = Vehicle::create($request->validated());
 
@@ -31,7 +31,7 @@ class VehicleController extends Controller
         return VehicleResource::make($vehicle);
     }
 
-    public function update(UpdateRequest $request, Vehicle $vehicle): JsonResponse
+    public function update(UpdateVehicleRequest $request, Vehicle $vehicle): JsonResponse
     {
         $vehicle->update($request->validated());
 
