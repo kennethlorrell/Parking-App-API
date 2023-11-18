@@ -12,6 +12,9 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
+/**
+ * @group Vehicles
+ */
 class VehicleController extends Controller
 {
     public function index(): AnonymousResourceCollection

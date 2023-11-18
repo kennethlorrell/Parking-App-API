@@ -11,6 +11,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
+/**
+ * @group Parking
+ */
 class ParkingController extends Controller
 {
     public function start(StartParkingRequest $request): JsonResource | JsonResponse
