@@ -19,7 +19,7 @@ class ParkingController extends Controller
 
         if (Parking::active()->where('vehicle_id', $data['vehicle_id'])->exists()) {
             return response()->json([
-                'errors' => ['general' => ['This vehicle is already parked. Please, stop active parking and try again.']]
+                'errors' => ['general' => [__('messages.vehicle_is_already_parked_somewhere_else')]]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -39,7 +39,7 @@ class ParkingController extends Controller
     {
         if ($parking->stop_time) {
             return response()->json([
-                'errors' => ['general' => ['Whoops, seems like this parking has already been stopped.']]
+                'errors' => ['general' => [__('messages.parking_has_already_been_stopped')]]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

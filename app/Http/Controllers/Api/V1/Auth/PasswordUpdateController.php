@@ -15,7 +15,7 @@ class PasswordUpdateController extends Controller
     {
         if (!Hash::check($request->current_password, auth()->user()->password)) {
             throw ValidationException::withMessages([
-                'current_password' => ['The provided credentials are incorrect.'],
+                'current_password' => __('validation.current_password')
             ]);
         }
 
@@ -24,7 +24,7 @@ class PasswordUpdateController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Your password has been updated.',
+            'message' => __('messages.password_successfully_updated'),
         ], Response::HTTP_ACCEPTED);
     }
 }
