@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\ParkingController;
 use App\Http\Controllers\Api\V1\VehicleController;
 use App\Http\Controllers\Api\V1\ZoneController;
+use App\Models\Parking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('vehicles', VehicleController::class);
 
     Route::prefix('/parkings')->group(function () {
+        Route::get('/', [ParkingController::class, 'index']);
+        Route::get('/history', [ParkingController::class, 'history']);
         Route::post('/start', [ParkingController::class, 'start']);
         Route::get('/{parking}', [ParkingController::class, 'show'])->whereNumber('parking');
         Route::put('/{parking}', [ParkingController::class, 'stop'])->whereNumber('parking');

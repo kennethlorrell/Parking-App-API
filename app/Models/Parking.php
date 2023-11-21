@@ -26,6 +26,11 @@ class Parking extends Model
         'stop_time' => 'datetime',
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class);

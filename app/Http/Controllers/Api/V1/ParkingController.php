@@ -8,6 +8,7 @@ use App\Http\Resources\ParkingResource;
 use App\Models\Parking;
 use App\Services\ParkingPriceService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
@@ -16,6 +17,20 @@ use Illuminate\Http\Response;
  */
 class ParkingController extends Controller
 {
+    public function index(): AnonymousResourceCollection
+    {
+        $activeParkings = Parking::active()->latest('start_time')->get();
+
+        return ParkingResource::collection($activeParkings);
+    }
+
+    public function history(): AnonymousResourceCollection
+    {
+        $stoppedParkings = Parking::stopped()->latest('stop_time')->get();
+
+        return ParkingResource::collection($stoppedParkings);
+    }
+
     public function start(StartParkingRequest $request): JsonResource | JsonResponse
     {
         $data = $request->validated();
