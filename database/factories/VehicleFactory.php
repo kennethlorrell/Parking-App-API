@@ -21,7 +21,8 @@ class VehicleFactory extends Factory
 
         return [
             'user_id' => User::inRandomOrder()->first(),
-            'plate_number' => $plateNumber
+            'plate_number' => $plateNumber,
+            'description' => fake()->text
         ];
     }
 }

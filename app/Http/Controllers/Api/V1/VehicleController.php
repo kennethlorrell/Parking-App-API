@@ -36,6 +36,12 @@ class VehicleController extends Controller
 
     public function update(UpdateVehicleRequest $request, Vehicle $vehicle): JsonResponse
     {
+        if ($vehicle->hasActiveParkings()) {
+            return response()->json([
+                'errors' => ['general' => [__('messages.can_not_update_vehicle_with_active_parkings')]]
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $vehicle->update($request->validated());
 
         return response()->json(
@@ -44,8 +50,14 @@ class VehicleController extends Controller
         );
     }
 
-    public function destroy(Vehicle $vehicle): Response
+    public function destroy(Vehicle $vehicle): Response | JsonResponse
     {
+        if ($vehicle->hasActiveParkings()) {
+            return response()->json([
+                'errors' => ['general' => [__('messages.can_not_remove_vehicle_with_active_parkings')]]
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $vehicle->delete();
 
         return response()->noContent();

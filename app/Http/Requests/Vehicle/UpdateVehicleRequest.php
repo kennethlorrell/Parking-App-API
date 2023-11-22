@@ -9,7 +9,8 @@ class UpdateVehicleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'plate_number' => ['required']
+            'plate_number' => 'required',
+            'description'  => 'nullable'
         ];
     }
 }

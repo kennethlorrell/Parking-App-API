@@ -26,7 +26,10 @@ class ParkingController extends Controller
 
     public function history(): AnonymousResourceCollection
     {
-        $stoppedParkings = Parking::stopped()->latest('stop_time')->get();
+        $stoppedParkings = Parking::stopped()
+            ->with(['vehicle' => fn ($q) => $q->withTrashed()])
+            ->latest('stop_time')
+            ->get();
 
         return ParkingResource::collection($stoppedParkings);
     }
@@ -48,7 +51,10 @@ class ParkingController extends Controller
 
     public function show(Parking $parking): JsonResource
     {
-        $parking->loadMissing('vehicle', 'zone');
+        $parking->load([
+            'vehicle' => fn ($q) => $q->withTrashed(),
+            'zone'
+        ]);
 
         return ParkingResource::make($parking);
     }
