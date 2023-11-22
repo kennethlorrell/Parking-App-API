@@ -19,7 +19,9 @@ class VehicleController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        return VehicleResource::collection(Vehicle::all());
+        $vehicles = Vehicle::all();
+
+        return VehicleResource::collection($vehicles);
     }
 
     public function store(StoreVehicleRequest $request): JsonResource
